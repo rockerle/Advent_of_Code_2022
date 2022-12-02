@@ -9,26 +9,23 @@ public class Part2 {
         try(Scanner s = new Scanner(new FileInputStream("src/day02/strategy.txt"))){
             while(s.hasNextLine()){
                 String[] line = s.nextLine().split(" ");
-                accScore += evalResult(line[0], line[1]);
+                accScore += evalResult(evalMove(line[0]), line[1]);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
         System.out.println("Accumulated Score according to the strategy: "+accScore);
     }
-    private static int evalResult(String a, String b){
+    private static int evalResult(Moves a, String b){
         switch(b){
             case "X":{ //lose case
-                Moves aMove = evalMove(a);
-                return ((aMove.id+2)%3)+1;
+                return ((a.id+2)%3)+1;
             }
             case "Y":{ // draw case
-                Moves aMove = evalMove(a);
-                return aMove.id+1 + 3;
+                return a.id+1 + 3;
             }
             case "Z":{ // win case
-                Moves aMove = evalMove(a);
-                return ((aMove.id+1)%3)+1 + 6;
+                return ((a.id+1)%3)+1 + 6;
             }
             default: return 0;
         }
